@@ -3,6 +3,9 @@
         <b-button class="my-2" variant="primary" @click="$router.go(0)">
             Fresh
         </b-button>
+        <b-button class="my-2" variant="primary" @click="pushTask">
+            Push Task
+        </b-button>
         <b-card no-body>
             <b-tabs pills card>
                 <b-tab title="Online" active>
@@ -181,8 +184,6 @@ export default class extends Vue {
 
     closedField = ["token"];
 
-    allLog: { [key: string]: string[] } = {};
-
     distTask(data: any) {
         this.$axios.$post(
             `/judger/task/${data.item.token}/${Math.random()
@@ -205,6 +206,12 @@ export default class extends Vue {
                 `/judger/log/${data.item.token}`
             );
         }
+    }
+
+    pushTask() {
+        this.$axios.$post("/test/scheduler/judgeQueue/push", {
+            id: Math.random().toString(35).slice(2),
+        });
     }
 }
 </script>

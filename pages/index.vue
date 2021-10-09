@@ -149,16 +149,21 @@
     </b-container>
 </template>
 
-<script lang="ts">
+<script>
 import { Component, Vue } from "vue-property-decorator";
-import axios from "@nuxtjs/axios";
+import "@nuxtjs/axios";
+import { exios } from "~/assets/exios";
+
 @Component({
     layout: "front",
     watchQuery: ["page"],
-    async asyncData({ $axios }) {
-        const ret = await $axios.$get("/judger/alltoken");
+    async asyncData() {
+        const ret = await exios({
+            method: "GET",
+            url: "/v1/judger/alltoken",
+        });
         for (const status in ret) {
-            ret[status] = ret[status].map((token: any) => {
+            ret[status] = ret[status].map((token) => {
                 return { token, log: [] };
             });
         }
@@ -184,33 +189,42 @@ export default class extends Vue {
 
     closedField = ["token"];
 
-    distTask(data: any) {
-        this.$axios.$post(
-            `/judger/task/${data.item.token}/${Math.random()
+    distTask(data) {
+        exios({
+            method: "post",
+            url: `/v1/judger/task/${data.item.token}/${Math.random()
                 .toString(35)
-                .slice(2)}`
-        );
+                .slice(2)}`,
+        });
     }
 
-    exit(data: any) {
-        this.$axios.$post(`/judger/exit/${data.item.token}`);
+    exit(data) {
+        exios({ method: "post", url: `/v1/judger/exit/${data.item.token}` });
     }
 
-    close(data: any) {
-        this.$axios.$post(`/judger/close/${data.item.token}`);
+    close(data) {
+        exios({
+            method: "post",
+            url: `/v1/judger/close/${data.item.token}`,
+        });
     }
 
-    async getJudgerLog(data: any) {
+    async getJudgerLog(data) {
         if (data.item.log.length === 0) {
-            data.item.log = await this.$axios.$get(
-                `/judger/log/${data.item.token}`
-            );
+            data.item.log = await exios({
+                method: "get",
+                url: `/v1/judger/log/${data.item.token}`,
+            });
         }
     }
 
     pushTask() {
-        this.$axios.$post("/test/scheduler/judgeQueue/push", {
-            id: Math.random().toString(35).slice(2),
+        exios({
+            method: "post",
+            url: "/v1/test/scheduler/judgeQueue/push",
+            data: {
+                id: Math.random().toString(35).slice(2),
+            },
         });
     }
 }

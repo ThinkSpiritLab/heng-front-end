@@ -44,7 +44,7 @@ export default {
 
     // Axios module configuration: https://go.nuxtjs.dev/config-axios
     axios: {
-        browserBaseURL: "/v1",
+        browserBaseURL: "/",
     },
 
     // Build Configuration: https://go.nuxtjs.dev/config-build

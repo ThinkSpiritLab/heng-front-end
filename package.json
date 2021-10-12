@@ -17,10 +17,14 @@
     "bootstrap-vue": "^2.21.2",
     "core-js": "^3.8.2",
     "crypto": "^1.0.1",
-    "heng-sign-js": "^0.0.14",
+    "heng-sign-js": "^0.0.17",
     "nuxt": "^2.14.6",
+    "vue": "2.6.14",
     "vue-class-component": "^7.2.6",
     "vue-property-decorator": "^9.1.2",
+    "vue-server-renderer": "2.6.14",
+    "vue-template-compiler": "2.6.14",
+    "vuex": "^3.6.2",
     "ws": "^7.4.2"
   },
   "devDependencies": {

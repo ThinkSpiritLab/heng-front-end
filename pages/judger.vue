@@ -329,6 +329,7 @@ export default class extends Vue {
                 method: "GET",
                 url: `/judger/${this.modalWsId}/info`,
             });
+            this.modalJudgerItem.wsId = this.modalWsId;
         };
         fn();
         this.modalTimer = setInterval(fn, 3000);

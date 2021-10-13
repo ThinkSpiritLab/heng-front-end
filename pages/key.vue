@@ -128,29 +128,12 @@ export default class extends Vue {
     modalQuantity = 1;
     modalNewKeys = null;
     keyField = [
-        {
-            key: "remark",
-            sortable: true,
-        },
-        {
-            key: "ak",
-            label: "AccessKey",
-        },
-        {
-            key: "sk",
-            label: "SecretKey",
-        },
-        {
-            key: "role",
-            sortable: true,
-        },
-        {
-            key: "createTime",
-            sortable: true,
-        },
-        {
-            key: "delete",
-        },
+        { key: "remark", sortable: true },
+        { key: "ak", label: "AccessKey" },
+        { key: "sk", label: "SecretKey" },
+        { key: "role", sortable: true },
+        { key: "createTime", sortable: true },
+        { key: "delete" },
     ];
 
     async newKey() {

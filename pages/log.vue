@@ -1,6 +1,7 @@
 <template>
     <div>
         <b-table hover :items="logs" :fields="logField" responsive="md">
+            <template #cell(index)="data">{{ data.index + 1 }}</template>
             <template #cell(payload)="data">
                 <b-button
                     v-b-modal="'modal-log-detail'"
@@ -46,16 +47,10 @@ import paginationNav from "~/components/PaginationNav.vue";
 export default class extends Vue {
     modalPayload = "{}";
     logField = [
-        {
-            key: "entry",
-        },
-        {
-            key: "createTime",
-            sortable: true,
-        },
-        {
-            key: "payload",
-        },
+        { key: "index", label: "#" },
+        { key: "entry" },
+        { key: "createTime", sortable: true },
+        { key: "payload" },
     ];
 
     get modalPayloadFormatted() {

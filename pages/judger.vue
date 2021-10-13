@@ -308,25 +308,11 @@ export default class extends Vue {
     delayMs = null;
     tokenFilterChoice = "";
     tableField = [
-        {
-            key: "name",
-            sortable: true,
-        },
-        {
-            key: "software",
-            sortable: true,
-        },
-        {
-            key: "createTime",
-            sortable: true,
-        },
-        {
-            key: "cpu",
-            sortable: true,
-        },
-        {
-            key: "judge",
-        },
+        { key: "name", sortable: true },
+        { key: "software", sortable: true },
+        { key: "createTime", sortable: true },
+        { key: "cpu", sortable: true },
+        { key: "judge" },
     ];
 
     mounted() {

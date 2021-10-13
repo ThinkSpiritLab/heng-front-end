@@ -206,10 +206,9 @@
                     >
                     <b-button
                         v-if="modalJudgerItem.status === 'online'"
+                        v-b-modal="'modal-judger-exit'"
                         variant="danger"
                         class="mb-2"
-                        :disabled="$store.state.busy.loading"
-                        @click="exit"
                         >Exit</b-button
                     >
                     <b-button
@@ -247,6 +246,42 @@
             </div>
             <loading v-else />
         </b-modal>
+        <b-modal
+            id="modal-judger-exit"
+            title="Exit"
+            size="lg"
+            scrollable
+            hide-footer
+        >
+            <b-form @submit.prevent="exit">
+                <b-form-group label="Reason">
+                    <b-input
+                        v-model="exitReason"
+                        placeholder="Optional(管理员手动操作)"
+                    ></b-input>
+                </b-form-group>
+                <b-form-group label="Delay Millisecond">
+                    <b-input
+                        v-model="delayMs"
+                        number
+                        type="number"
+                        min="0"
+                        step="1"
+                        max="86400000"
+                        placeholder="Optional(0)"
+                    ></b-input>
+                </b-form-group>
+                <b-form-group>
+                    <b-button
+                        type="submit"
+                        variant="danger"
+                        :disabled="$store.state.busy.loading"
+                        @click="$bvModal.hide('modal-judger-exit')"
+                        >Exit</b-button
+                    >
+                </b-form-group>
+            </b-form>
+        </b-modal>
     </div>
     <loading v-else />
 </template>
@@ -269,31 +304,28 @@ export default class extends Vue {
     mainTimer = null;
     modalTimer = null;
     modalJudgerItem = null;
+    exitReason = null;
+    delayMs = null;
     tokenFilterChoice = "";
     tableField = [
         {
             key: "name",
-            label: "Name",
             sortable: true,
         },
         {
             key: "software",
-            label: "Software",
             sortable: true,
         },
         {
             key: "createTime",
-            label: "CreateTime",
             sortable: true,
         },
         {
             key: "cpu",
-            label: "CPU",
             sortable: true,
         },
         {
             key: "judge",
-            label: "Judge",
         },
     ];
 
@@ -341,21 +373,14 @@ export default class extends Vue {
     }
 
     exit() {
-        this.$bvModal
-            .msgBoxConfirm(`Are you sure to exit this judger?`, {
-                title: "Please Confirm",
-                okVariant: "danger",
-                okTitle: "YES",
-                cancelTitle: "NO",
-                centered: true,
-            })
-            .then((value) => {
-                if (!value) return;
-                exios({
-                    method: "post",
-                    url: `/judger/${this.modalWsId}/exit`,
-                });
-            });
+        exios({
+            method: "post",
+            url: `/judger/${this.modalWsId}/exit`,
+            data: {
+                reason: this.exitReason,
+                delay: this.delayMs,
+            },
+        });
     }
 
     close() {

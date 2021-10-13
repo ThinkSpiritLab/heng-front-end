@@ -125,12 +125,11 @@ export default class extends Vue {
     keyFilterChoice = "";
     modalRemark = null;
     modalRole = null;
-    modalQuantity = null;
+    modalQuantity = 1;
     modalNewKeys = null;
     keyField = [
         {
             key: "remark",
-            label: "Remark",
             sortable: true,
         },
         {
@@ -143,17 +142,14 @@ export default class extends Vue {
         },
         {
             key: "role",
-            label: "Role",
             sortable: true,
         },
         {
             key: "createTime",
-            label: "CreateTime",
             sortable: true,
         },
         {
             key: "delete",
-            label: "Delete",
         },
     ];
 

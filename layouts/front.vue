@@ -2,8 +2,11 @@
     <b-container fluid="md">
         <b-nav id="admin-navbar" tabs fill align="center">
             <b-nav-item to="../home/" active-class="active">Home</b-nav-item>
-            <b-nav-item to="../judger/" active-class="active">Judger</b-nav-item>
+            <b-nav-item to="../judger/" active-class="active"
+                >Judger</b-nav-item
+            >
             <b-nav-item to="../key/" active-class="active">Key</b-nav-item>
+            <b-nav-item to="../log/" active-class="active">Log</b-nav-item>
             <b-nav-item @click="$router.go(0)">Fresh</b-nav-item>
             <b-nav-item @click="logout">Logout</b-nav-item>
         </b-nav>

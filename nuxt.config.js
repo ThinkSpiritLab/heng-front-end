@@ -4,7 +4,7 @@ export default {
 
     // Global page headers: https://go.nuxtjs.dev/config-head
     head: {
-        title: "interval-front-end",
+        title: "heng-front-end",
         htmlAttrs: {
             lang: "en",
         },

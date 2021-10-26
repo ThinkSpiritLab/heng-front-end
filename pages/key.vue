@@ -133,7 +133,7 @@ export default class extends Vue {
         { key: "sk", label: "SecretKey" },
         { key: "role", sortable: true },
         { key: "createTime", sortable: true },
-        {w key: "delete" },
+        { key: "delete" },
     ];
 
     async newKey() {

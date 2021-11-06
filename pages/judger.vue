@@ -61,9 +61,7 @@
                 ><b-link
                     v-b-modal="'modal-judger-info'"
                     @click="modalWsId = data.item.wsId"
-                    >{{
-                        data.item.info.name || data.item.wsId.split(".")[0]
-                    }}</b-link
+                    >{{ data.item.name }}</b-link
                 ></template
             >
             <template #cell(software)="data">{{
@@ -328,6 +326,7 @@ export default class extends Vue {
                     ? item.report.hardware.cpu.percentage
                     : 0;
                 item.createTime = Date.parse(item.info.createTime);
+                item.name = item.info.name || item.wsId.split(".")[0];
                 return item;
             });
         };

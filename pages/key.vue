@@ -58,6 +58,7 @@
             primary-key="ak"
             :filter="keyFilterChoice"
             :filter-included-fields="['role']"
+            sort-by="remark"
         >
             <template #cell(createTime)="data">{{
                 data.item.createTimeString

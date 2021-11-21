@@ -36,7 +36,16 @@
                         animated
                     ></b-progress-bar>
                 </b-progress>
-                <label>结果返回队列：{{ controller.task.cbQueue }}</label>
+                <b-row>
+                    <b-col md="6">
+                        <label>总评测容量：{{ totalMaxTaskCount }}</label>
+                    </b-col>
+                    <b-col md="6">
+                        <label
+                            >结果返回队列：{{ controller.task.cbQueue }}</label
+                        >
+                    </b-col>
+                </b-row>
             </b-col>
         </b-row>
         <b-form-group>
@@ -56,6 +65,7 @@
             primary-key="wsId"
             :filter="tokenFilterChoice"
             :filter-included-fields="['status']"
+            sort-by="name"
         >
             <template #cell(name)="data"
                 ><b-link
@@ -76,11 +86,27 @@
                         ['online', 'disabled'].includes(data.item.status) &&
                         data.item.report !== undefined
                     "
-                    style="width: 20rem"
+                    style="width: 10rem"
                 >
                     <b-progress
                         :max="1"
-                        :value="data.item.report.hardware.cpu.percentage"
+                        :value="data.item.cpu"
+                        show-progress
+                    ></b-progress>
+                </b-col>
+                <b-col v-else>{{ data.item.status }}</b-col>
+            </template>
+            <template #cell(memory)="data">
+                <b-col
+                    v-if="
+                        ['online', 'disabled'].includes(data.item.status) &&
+                        data.item.report !== undefined
+                    "
+                    style="width: 10rem"
+                >
+                    <b-progress
+                        :max="1"
+                        :value="data.item.memory"
                         show-progress
                     ></b-progress>
                 </b-col>
@@ -297,6 +323,7 @@ import TaskProgress from "~/components/TaskProgress.vue";
 })
 export default class extends Vue {
     controller = null;
+    totalMaxTaskCount = 0;
     judgers = null;
     modalWsId = null;
     mainTimer = null;
@@ -310,6 +337,7 @@ export default class extends Vue {
         { key: "software", sortable: true },
         { key: "createTime", sortable: true },
         { key: "cpu", sortable: true },
+        { key: "memory", sortable: true },
         { key: "judge" },
     ];
 
@@ -321,14 +349,21 @@ export default class extends Vue {
             });
 
             this.controller = ret.controller;
+            let tmpTotalMaxTaskCount = 0;
             this.judgers = ret.judgers.map((item) => {
                 item.cpu = ["online", "disabled"].includes(item.status)
                     ? item.report.hardware.cpu.percentage
                     : 0;
+                item.memory = ["online", "disabled"].includes(item.status)
+                    ? item.report.hardware.memory.percentage
+                    : 0;
                 item.createTime = Date.parse(item.info.createTime);
                 item.name = item.info.name || item.wsId.split(".")[0];
+                if (item.status === "online")
+                    tmpTotalMaxTaskCount += item.info.maxTaskCount;
                 return item;
             });
+            this.totalMaxTaskCount = tmpTotalMaxTaskCount;
         };
         fn();
         this.mainTimer = setInterval(fn, 3000);

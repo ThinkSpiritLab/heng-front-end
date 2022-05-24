@@ -165,8 +165,16 @@
                     </div>
                     <div>
                         <label
-                            >可承载任务数：<b-badge variant="primary"></b-badge
-                            >{{ modalJudgerItem.info.maxTaskCount }}</label
+                            >可承载任务数：{{
+                                modalJudgerItem.info.maxTaskCount
+                            }}</label
+                        >
+                    </div>
+                    <div>
+                        <label
+                            >时间倍率：{{
+                                modalJudgerItem.info.timeRatio
+                            }}</label
                         >
                     </div>
                 </div>

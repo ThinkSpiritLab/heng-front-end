@@ -2,20 +2,15 @@ import * as crypto from "crypto";
 import { Sign } from "heng-sign-js";
 import "@nuxtjs/axios";
 
-function encrypt(param) {
-    if (param.algorithm === "SHA256") {
-        return crypto.createHash("sha256").update(param.data).digest("hex");
-    } else if (param.algorithm === "HmacSHA256") {
-        if (!param.key) {
-            throw new Error("no key provided");
-        }
-        return crypto
-            .createHmac("sha256", param.key)
-            .update(param.data)
-            .digest("hex");
-    }
-    return "";
-}
+const encrypt = {
+    SHA256(data) {
+        return crypto.createHash("sha256").update(data).digest("hex");
+    },
+    HmacSHA256(key, data) {
+        return crypto.createHmac("sha256", key).update(data).digest("hex");
+    },
+};
+
 const sign = new Sign(encrypt);
 
 export function exios(config) {
